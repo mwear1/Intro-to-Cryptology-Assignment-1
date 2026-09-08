@@ -1,3 +1,5 @@
+# Security Analysis
+
 ## 1. Correctness
 
 Assume a message byte $m_i$ is encrypted using key byte $k_{i \bmod \ell}$.
@@ -17,21 +19,13 @@ $$
 Substitute the encryption equation:
 
 $$
-m_i'
-=
-(m_i \oplus k_{i \bmod \ell})
-\oplus
-k_{i \bmod \ell}.
+m_i' = (m_i \oplus k_{i \bmod \ell}) \oplus k_{i \bmod \ell}.
 $$
 
 Using associativity of XOR,
 
 $$
-m_i'
-=
-m_i
-\oplus
-(k_{i \bmod \ell} \oplus k_{i \bmod \ell}).
+m_i' = m_i \oplus (k_{i \bmod \ell} \oplus k_{i \bmod \ell}).
 $$
 
 Since $x \oplus x = 0$ and $x \oplus 0 = x$,
@@ -61,9 +55,7 @@ $$
 XOR both sides with $m_i$:
 
 $$
-m_i \oplus c_i
-=
-m_i \oplus m_i \oplus k_{i \bmod \ell}.
+m_i \oplus c_i = m_i \oplus m_i \oplus k_{i \bmod \ell}.
 $$
 
 Since $m_i \oplus m_i = 0$,
@@ -107,21 +99,13 @@ $$
 XOR the two ciphertext bytes:
 
 $$
-c_i \oplus c_i'
-=
-(m_i \oplus k_{i \bmod \ell})
-\oplus
-(m_i' \oplus k_{i \bmod \ell}).
+c_i \oplus c_i' = (m_i \oplus k_{i \bmod \ell}) \oplus (m_i' \oplus k_{i \bmod \ell}).
 $$
 
 Rearranging the terms gives
 
 $$
-c_i \oplus c_i'
-=
-m_i \oplus m_i'
-\oplus
-(k_{i \bmod \ell} \oplus k_{i \bmod \ell}).
+c_i \oplus c_i' = m_i \oplus m_i' \oplus (k_{i \bmod \ell} \oplus k_{i \bmod \ell}).
 $$
 
 Since
@@ -193,7 +177,7 @@ Therefore, repeating-key XOR is not a one-time pad when the key repeats within a
 
 ## 5. Security Limits
 
-### (a) Short repeating key
+### (a) Short Repeating Key
 
 If the key has length $\ell<n$, then the same key bytes are reused:
 
@@ -203,7 +187,7 @@ $$
 
 This does not provide strong confidentiality because the repetition creates patterns in the ciphertext. An attacker can group positions that use the same key byte and use known plaintext, frequency information, or other message structure to learn information about the plaintext or key.
 
-### (b) Random key at least as long as the message
+### (b) Random Key at Least as Long as the Message
 
 If the key is uniformly random, at least as long as the message, and never reused, then each message byte is XORed with a fresh random key byte:
 
@@ -230,11 +214,13 @@ The receiver has no way to determine from the ciphertext alone whether this modi
 Secure key distribution is also necessary. The sender and receiver must share the random key secretly; anyone who obtains the key can decrypt the message.
 
 ## Sources
-In-Class Slides as well as University of Maryland — Jonathan Katz, CMSC 456
+
+In-class lecture slides.
+
+University of Maryland — Jonathan Katz, CMSC 456  
 https://www.cs.umd.edu/~jkatz/crypto/s22/lectures.html
 
-Boneh & Shoup Applied Cryptography Textboof Online pdf
-Pages 6-12
+Dan Boneh and Victor Shoup, *A Graduate Course in Applied Cryptography*, pp. 6–12.
 
-Stanford CS255 — Many-Time Pad exercise
+Stanford CS255 — Many-Time Pad Exercise  
 https://cs255.stanford.edu/hw/hw1.html
